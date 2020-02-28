@@ -38,7 +38,9 @@ describe.only('Articles Endpoints', function() {
           .insert(testArticles);
       });
 
-      it('responds with 200 and all of the articles', () => {
+      it('responds with 200 and all of the articles', function() {
+        this.retries(3); // since we use timestamps and the seconds may not always match, we use Mochas retries to test it 3 times if needed
+
         return supertest(app)
           .get('/articles')
           .expect(200, testArticles);
@@ -65,7 +67,8 @@ describe.only('Articles Endpoints', function() {
           .insert(testArticles);
       });
 
-      it('responds with 200 and the specified article', () => {
+      it('responds with 200 and the specified article', function() {
+        this.retries(3); // since we use timestamps and the seconds may not always match, we use Mochas retries to test it 3 times if needed
         const articleId = 2;
         const expectedArticle = testArticles[articleId - 1];
         return supertest(app)
