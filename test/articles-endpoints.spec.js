@@ -20,11 +20,11 @@ describe.only('Articles Endpoints', function() {
 
   afterEach('cleanup', () => db('blogful_articles').truncate());
 
-  describe('GET /articles', () => {
+  describe('GET /api/articles', () => {
     context('Given no articles', () => {
       it('responds with 200 and an empty list', () => {
         return supertest(app)
-          .get('/articles')
+          .get('/api/articles')
           .expect(200, []);
       });
     });
@@ -42,18 +42,18 @@ describe.only('Articles Endpoints', function() {
         this.retries(3); // since we use timestamps and the seconds may not always match, we use Mochas retries to test it 3 times if needed
 
         return supertest(app)
-          .get('/articles')
+          .get('/api/articles')
           .expect(200, testArticles);
       });
     });
   });
 
-  describe('GET /articles/:article_id', () => {
+  describe('GET /api/articles/:article_id', () => {
     context('Given no articles', () => {
       it('responds with 404', () => {
         const articleId = 123456;
         return supertest(app)
-          .get(`/articles/${articleId}`)
+          .get(`/api/articles/${articleId}`)
           .expect(404, { error: { message: `Article doesn't exist` }});
       });
     });
@@ -72,7 +72,7 @@ describe.only('Articles Endpoints', function() {
         const articleId = 2;
         const expectedArticle = testArticles[articleId - 1];
         return supertest(app)
-          .get(`/articles/${articleId}`)
+          .get(`/api/articles/${articleId}`)
           .expect(200, expectedArticle);
       });
     });
