@@ -17,7 +17,7 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
-app.user('/api/users', usersRouter);
+app.use('/api/users', usersRouter);
 
 app.get('/articles', (req, res, next) => {
   const knexInstance = req.app.get('db');
