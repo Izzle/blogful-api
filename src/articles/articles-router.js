@@ -13,6 +13,7 @@ const serializeArticle = article => ({
   style: xss(article.style),
   content: xss(article.content),
   date_published: new Date(article.date_published).toLocaleString(),
+  author: article.author,
 });
 
 articlesRouter
@@ -27,8 +28,8 @@ articlesRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { title, style, content, date_published } = req.body;
-    const newArticle = { title, date_published };
+    const { title, style, content, author } = req.body;
+    const newArticle = { title, style, content };
 
     for (const [key, value] of Object.entries(newArticle)) {
       if (value == null) { // eslint-disable-line eqeqeq
@@ -38,8 +39,7 @@ articlesRouter
       }
     }
 
-    newArticle.style = style;
-    newArticle.content = content;
+    newArticle.author = author;
 
     ArticlesService.insertArticle(
       req.app.get('db'),
