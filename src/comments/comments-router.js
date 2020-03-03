@@ -31,9 +31,11 @@ commentsRouter
     const newComment = { text, article_id, user_id };
 
     for (const [key, value] of Object.entries(newComment)) {
-      return res.status(400).json({
-        error: { message: `Missing '${key}' in request body` }
-      });
+      if (value == null) { // eslint-disable-line eqeqeq
+        return res.status(400).json({
+          error: { message: `Missing '${key}' in request body` }
+        });
+      }
     }
 
     newComment.date_commented = date_commented;
