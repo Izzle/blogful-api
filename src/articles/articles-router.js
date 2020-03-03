@@ -30,7 +30,7 @@ articlesRouter
     const { title, style, content, date_published } = req.body;
     const newArticle = { title, date_published };
 
-    for (const [key, value] of Object.entries(newComment)) {
+    for (const [key, value] of Object.entries(newArticle)) {
       if (value == null) { // eslint-disable-line eqeqeq
         return res.status(400).json({
           error: { message: `Missing '${key}' in request body` }
@@ -48,7 +48,7 @@ articlesRouter
       .then(article => {
         res
           .status(201)
-          .location(path.posix.join(req.originalUrl, `${comment.id}`))
+          .location(path.posix.join(req.originalUrl, `${article.id}`))
           .json(serializeArticle(article));
       })
       .catch(next);
